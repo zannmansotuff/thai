@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบฝึกหัดเตรียมสอบ ภาษาไทย (ปลายภาค)</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #0f172a;
+            --subtext-color: #475569;
+            --primary-color: #0284c7;
+            --primary-hover: #0369a1;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --header-bg: #0f172a;
+            --header-text: #ffffff;
+            --badge-bg: #e0f2fe;
+            --badge-text: #0369a1;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --subtext-color: #94a3b8;
+            --primary-color: #38bdf8;
+            --primary-hover: #0284c7;
+            --border-color: #334155;
+            --success-color: #34d399;
+            --error-color: #f87171;
+            --header-bg: #020617;
+            --header-text: #f8fafc;
+            --badge-bg: #0c4a6e;
+            --badge-text: #bae6fd;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+        }
+
+        body {
+            font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        header p {
+            margin: 4px 0 0 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .theme-toggle-btn {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.6rem;
+            font-size: 1.25rem;
+        }
+
+        ul {
+            padding-left: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        li {
+            margin-bottom: 0.6rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .question {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            background-color: transparent;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.9rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary-color);
+            background-color: var(--bg-color);
+        }
+
+        .option-btn.correct {
+            background-color: var(--success-color) !important;
+            color: #ffffff !important;
+            border-color: var(--success-color) !important;
+        }
+
+        .option-btn.wrong {
+            background-color: var(--error-color) !important;
+            color: #ffffff !important;
+            border-color: var(--error-color) !important;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .next-btn, .restart-btn {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .next-btn:hover, .restart-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .score-board {
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+
+        .score-board h3 {
+            font-size: 1.8rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--primary-color);
+        }
+
+        .score-board p {
+            color: var(--subtext-color);
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>วิชาภาษาไทย (สอบปลายภาค)</h1>
+            <p>ทบทวนหลักภาษาไทย และ วรรณคดี</p>
+        </div>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+            <span id="themeIcon">🌙</span> <span id="themeText">Dark Mode</span>
+        </button>
+    </header>
+
+    <div class="container">
+
+        <!-- Topic Card -->
+        <div class="card">
+            <h2>ขอบเขตเนื้อหาที่ออกสอบ (ตามสรุป)</h2>
+            <h3>1. หลักภาษา</h3>
+            <ul>
+                <li><strong>คำพ้อง:</strong> พ้องรูป, พ้องเสียง, พ้องทั้งรูปพ้องทั้งเสียง, พ้องความหมาย (คำไวพจน์)</li>
+                <li><strong>ชนิดและหน้าที่ของคำ:</strong> คำนาม, คำสรรพนาม, คำกริยา, คำวิเศษณ์, คำบุพบท, คำอุทาน, คำเชื่อม</li>
+            </ul>
+            <h3 style="margin-top: 1rem;">2. วรรณคดี</h3>
+            <ul>
+                <li>โคลงโลกนิติ</li>
+                <li>ราชาธิราช (ตอน สมิงพระรามอาสา)</li>
+            </ul>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card">
+            <span class="badge" id="quiz-progress">ข้อที่ 1 จาก 20</span>
+            <div id="quiz-box">
+                <div class="question" id="question-text">กำลังโหลดคำถาม...</div>
+                <div class="options-list" id="options-container"></div>
+                <div class="controls">
+                    <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display: none;">ข้อถัดไป</button>
+                </div>
+            </div>
+
+            <!-- Score Results -->
+            <div id="score-box" class="score-board" style="display: none;">
+                <h3 id="score-title">คำนวณคะแนน...</h3>
+                <p id="score-subtitle">คุณทำแบบทดสอบทบทวนเนื้อหาครบถ้วนแล้ว!</p>
+                <button class="restart-btn" onclick="restartQuiz()">ทำแบบทดสอบอีกครั้ง</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const questions = [
+            // คำพ้อง
+            {
+                question: "1. คำว่า 'เพลา' (กาลเวลา) กับ 'เพลา' (แกนสำหรับหมุน wheel axle) จัดเป็นคำพ้องประเภทใด?",
+                options: ["คำพ้องรูป", "คำพ้องเสียง", "คำพ้องทั้งรูปพ้องทั้งเสียง", "คำพ้องความหมาย"],
+                answer: 0
+            },
+            {
+                question: "2. คำว่า 'กรรณ' (หู) และ 'กัณฑ์' (เทศน์) จัดเป็นคำพ้องประเภทใด?",
+                options: ["คำพ้องรูป", "คำพ้องเสียง", "คำพ้องทั้งรูปและเสียง", "คำพ้องความหมาย"],
+                answer: 1
+            },
+            {
+                question: "3. ข้อใดคือความหมายของ 'คำพ้องความหมาย' (คำไวพจน์)?",
+                options: ["เขียนเหมือนกัน แต่ความหมายต่างกัน", "ออกเสียงเหมือนกัน แต่เขียนต่างกัน", "เขียนต่างกัน ออกเสียงต่างกัน แต่ความหมายเหมือนหรือใกล้เคียงกัน", "เขียนและออกเสียงเหมือนกัน"],
+                answer: 2
+            },
+            {
+                question: "4. คำว่า 'นภา, อัมพร, เวหา' มีความหมายพ้องกับข้อใด?",
+                options: ["ภูเขา", "ท้องฟ้า", "แม่น้ำ", "ดวงอาทิตย์"],
+                answer: 1
+            },
+
+            // ชนิดและหน้าที่ของคำ
+            {
+                question: "5. ประโยค 'ความรักทำให้คนตาบอด' คำว่า 'ความรัก' จัดเป็นคำนามชนิดใด?",
+                options: ["สามานยนาม", "วิสามานยนาม", "อาการนาม", "ลักษณะนาม"],
+                answer: 2
+            },
+            {
+                question: "6. 'เขา' ในประโยค 'เขาเดินทางไปโรงเรียนทุกวัน' ทำหน้าที่เป็นคำชนิดใด?",
+                options: ["คำนาม", "คำสรรพนาม", "คำวิเศษณ์", "คำเชื่อม"],
+                answer: 1
+            },
+            {
+                question: "7. ประโยคใดต่อไปนี้มี 'คำวิเศษณ์' ขยายคำกริยา?",
+                options: ["น้องวิ่งอย่างรวดเร็ว", "ฉันกินข้าวผัด", "แมวอยู่บนหลังคา", "อุ๊ย! ตกใจหมดเลย"],
+                answer: 0
+            },
+            {
+                question: "8. 'บน, ใต้, ใน, นอก, สำหรับ' จัดเป็นคำชนิดใดในภาษาไทย?",
+                options: ["คำเชื่อม (สันธาน)", "คำบุพบท", "คำอุทาน", "คำวิเศษณ์"],
+                answer: 1
+            },
+            {
+                question: "9. ประโยค 'ฉันอยากไปเที่ยว **แต่** ฝนตกหนัก' คำว่า **แต่** ทำหน้าที่เป็นคำชนิดใด?",
+                options: ["คำบุพบท", "คำเชื่อม (สันธาน)", "คำอุทาน", "คำสรรพนาม"],
+                answer: 1
+            },
+            {
+                question: "10. ข้อใดใช้ 'คำอุทาน' ได้ถูกต้องตามอารมณ์ตกใจ?",
+                options: ["โธ่! น่าสงสารจัง", "พุทโธ่! ลืมหยิบกระเป๋า", "อุ้ย! ตกใจหมดเลย", "ไชโย! ข้อสอบง่ายจัง"],
+                answer: 2
+            },
+
+            // วรรณคดี: โคลงโลกนิติ
+            {
+                question: "11. คำสอนใน 'โคลงโลกนิติ' มีวัตถุประสงค์หลักเพื่ออะไร?",
+                options: ["เพื่อการดำเนินชีวิตและการปรับตัวในสังคม", "เพื่อฝึกการรบทัพจับศึก", "เพื่อประวัติศาสตร์การเมือง", "เพื่อความบันเทิงสนุกสนาน"],
+                answer: 0
+            },
+            {
+                question: "12. 'ปลาร้าพันห่อด้วย ใบคา / ใบก็เหม็นคาวปลา บากบ้อง' โคลงบทนี้เปรียบเทียบถึงเรื่องใด?",
+                options: ["การเลือกรับประทานอาหาร", "การคบคนชั่วย่อมพาให้หมองหมอง (คบคนพาล)", "การทำมาหากิน", "การถนอมอาหาร"],
+                answer: 1
+            },
+            {
+                question: "13. 'ใบพูลพันห่อหุ้ม กฤษณา / หอมระรวยรสพา จิตตให้' โคลงบทนี้ตรงกับสำภาษิตใด?",
+                options: ["คบพาลพาลพาไปหาผิด", "คบบัณฑิตบัณฑิตพาไปหาผล", "กงเกวียนกำเกวียน", "น้ำเชี่ยวอย่าขวางเรือ"],
+                answer: 1
+            },
+            {
+                question: "14. ฉันทลักษณ์ที่ใช้ในการแต่งวรรณคดีเรื่อง 'โคลงโลกนิติ' คือข้อใด?",
+                options: ["กลอนสุภาพ", "กาพย์ยานี 11", "โคลงสี่สุภาพ", "ร่ายยาว"],
+                answer: 2
+            },
+            {
+                question: "15. 'นาคีมีพิษเพี้ยง สุริโย / เลื้อยบ่ทำเดโช แช่มช้า' กล่าวถึงลักษณะของคนประเภทใด?",
+                options: ["คนอวดเก่ง", "คนมีความรู้ความสามารถแต่ถ่อมตน", "คนขี้เกียจ", "คนดุร้าย"],
+                answer: 1
+            },
+
+            // วรรณคดี: ราชาธิราช (ตอน สมิงพระรามอาสา)
+            {
+                question: "16. ราชาธิราช (ตอน สมิงพระรามอาสา) เป็นเรื่องราวความขัดแย้งระหว่างสองอาณาจักรใด?",
+                options: ["ไทย - พม่า", "หงสาวดี (มอญ) - อังวะ (พม่า)", "ไทย - ขอม", "ล้านนา - สุโขทัย"],
+                answer: 1
+            },
+            {
+                question: "17. สมิงพระราม อาสาออกไปทำศึกรำทวนขี่ม้าต่อสู้กับใคร?",
+                options: ["พระเจ้าฝรั่งมังศรี", "กามะนี", "พระเจ้าหงสาวดี", "กุมภกรรณ"],
+                answer: 1
+            },
+            {
+                question: "18. จุดประสงค์หลักที่สมิงพระรามยอมออกรบอาสาคือข้อใด?",
+                options: ["ต้องการยศถาบรรดาศักดิ์", "เพื่อปกป้องพระศาสนาและแผ่นดินไม่ให้ตกเป็นทาส", "ต้องการแต่งงานกับพระราชธิดา", "ต้องการแก้แค้นนายทหารอังวะ"],
+                answer: 1
+            },
+            {
+                question: "19. ก่อนที่สมิงพระรามจะรับอาสาแข่งรำทวน ได้ขอสิ่งใดจากพระเจ้าอังวะ?",
+                options: ["ม้าดีที่มีกำลังและขวัญม้าถูกต้องตามตำรา", "ดาบทองคำ", "กองทัพทหาร 1,000 นาย", "เสบียงอาหาร"],
+                answer: 0
+            },
+            {
+                question: "20. คุณธรรมเด่นชัดที่สุดของสมิงพระรามที่ปรากฏในเรื่องคือข้อใด?",
+                options: ["ความซื่อสัตย์ กตัญญูต่อแผ่นดิน และความกล้าหาญ", "ความโลภในทรัพย์สิน", "ความต้องการอำนาจทางการเมือง", "ความริษยาผู้อื่น"],
+                answer: 0
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionElement = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextButton = document.getElementById('next-btn');
+        const quizBox = document.getElementById('quiz-box');
+        const scoreBox = document.getElementById('score-box');
+        const progressElement = document.getElementById('quiz-progress');
+
+        function loadQuestion() {
+            const currentQ = questions[currentQuestionIndex];
+            progressElement.style.display = 'inline-block';
+            progressElement.textContent = `ข้อที่ ${currentQuestionIndex + 1} จาก ${questions.length}`;
+            questionElement.textContent = currentQ.question;
+            optionsContainer.innerHTML = '';
+            nextButton.style.display = 'none';
+
+            currentQ.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('option-btn');
+                button.onclick = () => selectOption(index, button);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function selectOption(selectedIndex, selectedBtn) {
+            const currentQ = questions[currentQuestionIndex];
+            const buttons = optionsContainer.getElementsByClassName('option-btn');
+
+            for (let btn of buttons) {
+                btn.disabled = true;
+            }
+
+            if (selectedIndex === currentQ.answer) {
+                selectedBtn.classList.add('correct');
+                score++;
+            } else {
+                selectedBtn.classList.add('wrong');
+                buttons[currentQ.answer].classList.add('correct');
+            }
+
+            nextButton.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizBox.style.display = 'none';
+            progressElement.style.display = 'none';
+            scoreBox.style.display = 'block';
+            document.getElementById('score-title').textContent = `คะแนนของคุณ: ${score} / ${questions.length}`;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            quizBox.style.display = 'block';
+            scoreBox.style.display = 'none';
+            loadQuestion();
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+
+            if (currentTheme === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark Mode';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light Mode';
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
